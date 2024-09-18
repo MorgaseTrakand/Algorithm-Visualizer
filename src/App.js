@@ -2,27 +2,38 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
-  const quickSort = (low, high, array) => {
-    if (low >= high) {
-        return
+  const quickSort = async (low, high, array) => {
+    if (low < high) {
+        const pivotIndex = await partition(low, high, array);
+        await quickSort(low, pivotIndex - 1, array); // Wait for left side
+        await quickSort(pivotIndex + 1, high, array); // Wait for right side
     }
-    let pivotIndex = partition(low, high, array)
-    quickSort(low, pivotIndex - 1, array)
-    quickSort(pivotIndex+1, high, array)
-  }
+};
 
-  async function partition(low, high, arr) {
-      let pivotValue = arr[high].value
-      let i = low - 1
-      for (let j = low; j < high; j++) {
-          if (arr[j].value <= pivotValue) {
-              i++;
-              [arr[i], arr[j]] = [arr[j], arr[i]];
-          }
-      }
-      [arr[high], arr[i+1]] = [arr[i+1], arr[high]]
-      return i+1
-  }
+async function partition(low, high, arr) {
+    let pivotValue = arr[high].value;
+    let i = low - 1;
+    let lastIndexes = []
+
+    for (let j = low; j < high; j++) {
+        if (arr[j].value <= pivotValue) {
+            i++;
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+            setItems([...arr]); // Update state here
+            arr[i].backgroundColor = 'red';
+            arr[j].backgroundColor = 'red';
+            lastIndexes.forEach(item => item.backgroundColor = '#333A56');
+            lastIndexes = [arr[i], arr[j]];
+            // Introduce a delay to visualize the step
+            await new Promise(resolve => setTimeout(resolve, 50));
+        }
+    }
+    lastIndexes.forEach(item => item.backgroundColor = '#333A56');
+    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
+    setItems([...arr]); // Final state update after partition
+    return i + 1;
+}
+
   const [sliderValue, setSliderValue] = useState(50);
   const [items, setItems] = useState([]);
   const shuffleTimeoutRef = useRef(null);
@@ -51,7 +62,6 @@ function App() {
     }
     const arr = [...items]
     quickSort(0, arr.length-1, arr)
-    setItems([...arr])
   };
 
   const handleShuffleArray = async () => {
@@ -73,7 +83,7 @@ function App() {
 
       setItems([...shuffledItems]);
       
-      await new Promise(resolve => shuffleTimeoutRef.current = setTimeout(resolve, 100));
+      await new Promise(resolve => shuffleTimeoutRef.current = setTimeout(resolve, 50));
     }
     // clear color form last items
     lastIndexs.forEach(item => item.backgroundColor = '#333A56');
@@ -102,7 +112,7 @@ function App() {
             <input
               type="range"
               min="10"
-              max="80"
+              max="1000"
               step="1"
               value={sliderValue}
               onChange={handleSliderChange}
