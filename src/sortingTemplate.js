@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from 'react';
+import { shuffle } from './sortingAlgorithsm/shuffleAlgorithm';
 import './App.css';
 
 function SortingTemplate( { sortFunction } ) {
@@ -33,32 +34,16 @@ function SortingTemplate( { sortFunction } ) {
         setIsSorted(true)
     }
   };
-
   const handleShuffleArray = async () => {
+    //setIsSorted setIsAnimation 
     if (!isAnimation) {
         setIsSorted(false)
         setIsAnimation(true)
-        const shuffledItems = [...items];
-        let lastIndexs = [];
-    
-        for (let i = shuffledItems.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [shuffledItems[i], shuffledItems[j]] = [shuffledItems[j], shuffledItems[i]];
-          shuffledItems[i].backgroundColor = 'red';
-          shuffledItems[j].backgroundColor = 'red';
-          lastIndexs.forEach(item => item.backgroundColor = '#333A56');
-          lastIndexs = [shuffledItems[i], shuffledItems[j]];
-    
-          setItems([...shuffledItems]);
-          
-          await new Promise(resolve => setTimeout(resolve, 10));
-        }
-        // clear color form last items
-        lastIndexs.forEach(item => item.backgroundColor = '#333A56');
-        setItems([...shuffledItems])
+        let shuffledItems = [...items];
+        await shuffle(shuffledItems, setItems)
         setIsAnimation(false)
     }
-  };
+  }
 
   const maxValue = Math.max(...items.map(item => item.value), 1);
   return (
