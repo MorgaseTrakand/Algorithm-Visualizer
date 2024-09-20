@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import { shuffle } from './sortingAlgorithsm/shuffleAlgorithm';
 import './App.css';
 
-function SortingTemplate( { sortFunction } ) {
+function SortingTemplate( { sortFunction, sortNumber } ) {
   const [isAnimation, setIsAnimation] = useState(false)
   const [isSorted, setIsSorted] = useState(true)
   const [sliderValue, setSliderValue] = useState(50);
@@ -15,6 +15,7 @@ function SortingTemplate( { sortFunction } ) {
       backgroundColor: '#333A56'
     }));
   };
+
   //sets array into state, rerun function if sliderValue (length) changes
   useEffect(() => {
     setItems(generateSequentialItems(sliderValue));
@@ -22,20 +23,28 @@ function SortingTemplate( { sortFunction } ) {
 
   //changes size of array
   const handleSliderChange = (event) => {
-    setSliderValue(event.target.value);
+    if (!isAnimation) {
+        setSliderValue(event.target.value);
+    }
   };
 
+  //calls current sort function
   const handleSortArray = async () => {
     if (!isAnimation && !isSorted) {
         setIsAnimation(true)
         const arr = [...items]
-        await sortFunction(0, arr.length-1, arr, setItems)
+        if (sortNumber === 1) { 
+            await sortFunction(arr, setItems)
+        } else {
+            await sortFunction(0, arr.length-1, arr, setItems)
+        }
         setIsAnimation(false)
         setIsSorted(true)
     }
   };
+
+  //calls shuffle function
   const handleShuffleArray = async () => {
-    //setIsSorted setIsAnimation 
     if (!isAnimation) {
         setIsSorted(false)
         setIsAnimation(true)
@@ -46,6 +55,7 @@ function SortingTemplate( { sortFunction } ) {
   }
 
   const maxValue = Math.max(...items.map(item => item.value), 1);
+
   return (
     <>
       <header>
