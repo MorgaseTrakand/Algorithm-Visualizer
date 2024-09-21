@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import { shuffle } from './sortingAlgorithsm/shuffleAlgorithm';
 import './App.css';
 
@@ -7,6 +7,8 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
   const [isSorted, setIsSorted] = useState(true)
   const [sliderValue, setSliderValue] = useState(50);
   const [items, setItems] = useState([]);
+  const [paused, setPaused] = useState(false)
+  const delayRef = useRef(100);
 
   //generates sorted array
   const generateSequentialItems = (length) => {
@@ -34,9 +36,9 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
         setIsAnimation(true)
         const arr = [...items]
         if (sortNumber === 1) { 
-            await sortFunction(arr, setItems)
+            await sortFunction(arr, setItems, getDelay)
         } else {
-            await sortFunction(0, arr.length-1, arr, setItems)
+            await sortFunction(0, arr.length-1, arr, setItems, getDelay)
         }
         setIsAnimation(false)
         setIsSorted(true)
@@ -49,8 +51,22 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
         setIsSorted(false)
         setIsAnimation(true)
         let shuffledItems = [...items];
-        await shuffle(shuffledItems, setItems)
+        await shuffle(shuffledItems, setItems, getDelay)
         setIsAnimation(false)
+    }
+  }
+  const getDelay = () => {
+    return delayRef.current
+  };
+
+  const handlePause = () => {
+    if (paused) {
+      delayRef.current = 10
+      setPaused(false)
+    }
+    else {
+      delayRef.current = 1000000
+      setPaused(true)
     }
   }
 
@@ -72,6 +88,11 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
             style={{ cursor: 'pointer' }}
           >
             Shuffle
+          </h1>
+          <h1
+            onClick={() => handlePause()}
+          >
+            {paused ? 'Resume' : 'Pause'}
           </h1>
           <div className="slider">
             <input

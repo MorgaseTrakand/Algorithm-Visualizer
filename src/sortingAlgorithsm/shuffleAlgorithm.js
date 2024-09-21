@@ -1,4 +1,4 @@
-export const shuffle = async (shuffledItems, setItems) => {
+export const shuffle = async (shuffledItems, setItems, getDelay) => {
     let lastIndexs = [];
     
     for (let i = shuffledItems.length - 1; i > 0; i--) {
@@ -11,7 +11,14 @@ export const shuffle = async (shuffledItems, setItems) => {
     
         setItems([...shuffledItems]);
           
-        await new Promise(resolve => setTimeout(resolve, 10));
+        let delay = getDelay();
+        while (true) {
+            if (delay < 1000000) break;
+            delay = getDelay();
+            await new Promise(resolve => setTimeout(resolve, 50))
+        }
+
+        await new Promise(resolve => setTimeout(resolve, delay));
       }
       // clear color form last items
       lastIndexs.forEach(item => item.backgroundColor = '#333A56');
