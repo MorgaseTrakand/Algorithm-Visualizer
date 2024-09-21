@@ -33,6 +33,9 @@ header {
   align-items: center;
   padding: 0 20px;
 }
+header h1 {
+  user-select: none;
+}
 .header-left {
   display: flex;
   justify-content: space-between;

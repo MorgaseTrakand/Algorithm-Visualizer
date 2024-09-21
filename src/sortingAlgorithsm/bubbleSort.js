@@ -1,4 +1,4 @@
-export const bubbleSort = async (array, setItems, delay) => {   
+export const bubbleSort = async (array, setItems, getDelay) => {   
     let lastIndexes = [] 
     const length = array.length;
     let currentMax = 0
@@ -7,6 +7,14 @@ export const bubbleSort = async (array, setItems, delay) => {
         currentMax = array[0].value
         for (let j = 0; j < length - 1 - i; j++) {
             if (array[j + 1].value < array[j].value) { 
+                let delay = getDelay();
+                while (true) {
+                    if (delay < 1000000) break;
+                    delay = getDelay();
+                    await new Promise(resolve => setTimeout(resolve, 50))
+                }
+    
+                await new Promise(resolve => setTimeout(resolve, delay));
                 [array[j], array[j + 1]] = [array[j + 1], array[j]];
                 array[j+1].backgroundColor = 'red';
 
@@ -16,7 +24,6 @@ export const bubbleSort = async (array, setItems, delay) => {
                     lastIndexes = [array[j+1]];
                 }
                 setItems([...array]);
-                await new Promise(resolve => setTimeout(resolve, delay));
             }
         }
         currentMax = 0

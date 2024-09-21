@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useRef} from 'react';
-import { shuffle } from './sortingAlgorithsm/shuffleAlgorithm';
-import './App.css';
+import { shuffle } from '../sortingAlgorithsm/shuffleAlgorithm';
+import Header from './header';
+import '../App.css';
 
 function SortingTemplate( { sortFunction, sortNumber } ) {
   const [isAnimation, setIsAnimation] = useState(false)
   const [isSorted, setIsSorted] = useState(true)
   const [sliderValue, setSliderValue] = useState(50);
-  const [items, setItems] = useState([]);
   const [paused, setPaused] = useState(false)
-  const delayRef = useRef(100);
+  const delayRef = useRef(50);
+  const [items, setItems] = useState([]);
 
   //generates sorted array
   const generateSequentialItems = (length) => {
@@ -22,6 +23,13 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
   useEffect(() => {
     setItems(generateSequentialItems(sliderValue));
   }, [sliderValue]);
+
+  //set paused to false when animation ends
+  useEffect(() => {
+    if (!isAnimation) {
+      setPaused(false)
+    }
+  }, [isAnimation])
 
   //changes size of array
   const handleSliderChange = (event) => {
@@ -55,18 +63,21 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
         setIsAnimation(false)
     }
   }
+
   const getDelay = () => {
     return delayRef.current
   };
 
   const handlePause = () => {
-    if (paused) {
-      delayRef.current = 10
-      setPaused(false)
-    }
-    else {
-      delayRef.current = 1000000
-      setPaused(true)
+    if (isAnimation) {
+      if (paused) {
+        delayRef.current = 10
+        setPaused(false)
+      }
+      else {
+        delayRef.current = 1000000
+        setPaused(true)
+      }
     }
   }
 
@@ -74,40 +85,7 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
 
   return (
     <>
-      <header>
-        <h1>Home</h1>
-        <div className="header-left">
-          <h1
-              onClick={() => handleSortArray()}
-              style={{ cursor: 'pointer' }}
-            >
-              Sort
-          </h1>
-          <h1
-            onClick={() => handleShuffleArray()}
-            style={{ cursor: 'pointer' }}
-          >
-            Shuffle
-          </h1>
-          <h1
-            onClick={() => handlePause()}
-          >
-            {paused ? 'Resume' : 'Pause'}
-          </h1>
-          <div className="slider">
-            <input
-              type="range"
-              min="10"
-              max="1000"
-              step="1"
-              value={sliderValue}
-              onChange={handleSliderChange}
-              style={{ '--c': 'lightblue', '--l': '6px', '--g': '12px' }}
-            />
-            <h1>Size: {sliderValue}</h1>
-          </div>
-        </div>
-      </header>
+      <Header handleSortArray={handleSortArray} handleShuffleArray={handleShuffleArray} handlePause={handlePause} sliderValue={sliderValue} handleSliderChange={handleSliderChange} paused={paused}/>
       <div className="array-container">
         {items.map((item, index) => {
           const heightPercentage = maxValue ? (item.value / maxValue) * 100 : 0;
@@ -123,6 +101,8 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
           );
         })}
       </div>
+
+      
     </>
   );
 }

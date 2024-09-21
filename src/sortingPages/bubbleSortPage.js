@@ -1,6 +1,6 @@
 import React from 'react';
 import { bubbleSort } from '../sortingAlgorithsm/bubbleSort';
-import SortingTemplate from '../sortingTemplate';
+import SortingTemplate from '../sortingPageComponents/sortingTemplate';
 
 const BubbleSortPage = () => {
     return <SortingTemplate sortFunction={bubbleSort} sortNumber={1}/>;
