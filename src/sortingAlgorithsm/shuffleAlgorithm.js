@@ -1,27 +1,20 @@
-export const shuffle = async (shuffledItems, setItems, getDelay) => {
-    let lastIndexs = [];
-    
+import { delaySystem } from "./delayFunction";
+
+export const shuffle = async (shuffledItems, setItems, getDelay) => {    
     for (let i = shuffledItems.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledItems[i], shuffledItems[j]] = [shuffledItems[j], shuffledItems[i]];
-        shuffledItems[i].backgroundColor = 'red';
-        shuffledItems[j].backgroundColor = 'red';
-        lastIndexs.forEach(item => item.backgroundColor = '#333A56');
-        lastIndexs = [shuffledItems[i], shuffledItems[j]];
-    
-        setItems([...shuffledItems]);
-          
-        let delay = getDelay();
-        while (true) {
-            if (delay < 1000000) break;
-            delay = getDelay();
-            await new Promise(resolve => setTimeout(resolve, 50))
+        let j = Math.floor(Math.random() * (i + 1));
+        while (j === i) {
+            j = Math.floor(Math.random() * (i + 1));
         }
 
-        await new Promise(resolve => setTimeout(resolve, delay));
-      }
-      // clear color form last items
-      lastIndexs.forEach(item => item.backgroundColor = '#333A56');
-      setItems([...shuffledItems])
+        let temp = shuffledItems[i].height
+        shuffledItems[i].height = shuffledItems[j].height
+        shuffledItems[j].height = temp
+        shuffledItems[i].backgroundColor = shuffledItems[j].backgroundColor = 'red';
+        setItems([...shuffledItems])
 
+        await delaySystem(getDelay)      
+        shuffledItems[i].backgroundColor = shuffledItems[j].backgroundColor = '#333A56'
+        setItems([...shuffledItems])      
+      }
 }

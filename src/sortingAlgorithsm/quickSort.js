@@ -1,5 +1,3 @@
-import { gsap } from 'gsap';
-
 export const quickSort = async (low, high, array, setItems, getDelay) => {
     if (low < high) {
         const pivotIndex = await partition(low, high, array, setItems, getDelay);

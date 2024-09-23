@@ -8,16 +8,22 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
   const [isSorted, setIsSorted] = useState(true)
   const [sliderValue, setSliderValue] = useState(50);
   const [paused, setPaused] = useState(false)
-  const delayRef = useRef(50);
+  const delayRef = useRef(1000);
   const [items, setItems] = useState([]);
 
   //generates sorted array
   const generateSequentialItems = (length) => {
-    return Array.from({ length }, (_, index) => ({
-      value: index + 1,
-      backgroundColor: '#333A56'
-    }));
+    const maxValue = length; 
+    return Array.from({ length }, (_, index) => {
+      const heightPercentage = (index + 1) / maxValue * 100;
+      return {
+        value: index + 1,
+        backgroundColor: '#333A56',
+        height: heightPercentage
+      };
+    });
   };
+  
 
   //sets array into state, rerun function if sliderValue (length) changes
   useEffect(() => {
@@ -55,11 +61,11 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
 
   //calls shuffle function
   const handleShuffleArray = async () => {
+    const arrayBars = [...items]
     if (!isAnimation) {
         setIsSorted(false)
         setIsAnimation(true)
-        let shuffledItems = [...items];
-        await shuffle(shuffledItems, setItems, getDelay)
+        await shuffle(arrayBars, setItems, getDelay)
         setIsAnimation(false)
     }
   }
@@ -71,7 +77,7 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
   const handlePause = () => {
     if (isAnimation) {
       if (paused) {
-        delayRef.current = 10
+        delayRef.current = 100
         setPaused(false)
       }
       else {
@@ -81,7 +87,6 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
     }
   }
 
-  const maxValue = Math.max(...items.map(item => item.value), 1);
 
   return (
     <>
@@ -89,13 +94,12 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
       <div className="array-container">
         <h1 className='sort-title'>Quick Sort</h1>
         {items.map((item, index) => {
-          const heightPercentage = maxValue ? (item.value / maxValue) * 100 : 0;
           return (
             <div
               key={index}
               className="item"
               style={{
-                height: `${heightPercentage}%`,
+                height: `${item.height}%`,
                 backgroundColor: item.backgroundColor
               }}
             ></div>
