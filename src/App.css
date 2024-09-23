@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+
+body {
+  background-color: aliceblue;
+}
 .App {
   text-align: center;
   display: flex;
@@ -9,9 +14,9 @@
 }
 .array-container {
   height: 80vh;
-  margin: 0 30px;
-  margin-top: 10vh;
-  background-color: #F4F4F4;
+  margin-top: 160px;
+  margin-left: 5vw;
+  margin-right: 5vw;
   display: flex;
   justify-content: space-between;
   align-items:end;
@@ -20,13 +25,13 @@
 .item {
   height: 90%;
   width: 20%;
-  margin: 0 1px;
+  margin-right: 1px;
   background-color: #373737;
   border-radius: 5px;
 }
 header {
   height: 80px;
-  background-color: #F4F4F4;
+  background-color: #001F3F;
   border-radius: 5px;
   display: flex;
   justify-content: space-between;
@@ -35,16 +40,30 @@ header {
 }
 header h1 {
   user-select: none;
+  color: rgb(227, 230, 233);
 }
 .header-left {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  right: 5vw;
+  top: 140px;
 }
 .header-left h1 {
   margin: 0 14px;
   text-align: center;
+  color: black;
 }
-
+.sort-title {
+ position: absolute; 
+ top: 80px;
+ font-family: 'Electrolize', sans-serif;
+ font-size: 80px;
+}
+.size-title {
+  font-size: 26px;
+}
 
 
 .slider {
@@ -52,11 +71,11 @@ header h1 {
 }
 input {
   --c: lightblue; /* active color */
-  --g: 8px; /* the gap */
-  --l: 5px; /* line thickness*/
-  --s: 30px; /* thumb size*/
+  --g: 2px; /* the gap */
+  --l: 2px !important; /* line thickness*/
+  --s: 25px; /* thumb size*/
   
-  width: 300px;
+  width: 250px;
   height: var(--s); /* needed for Firefox*/
   --_c: color-mix(in srgb, var(--c), #000 var(--p,0%));
   -webkit-appearance :none;

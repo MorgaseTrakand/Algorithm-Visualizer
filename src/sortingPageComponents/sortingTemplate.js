@@ -87,6 +87,7 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
     <>
       <Header handleSortArray={handleSortArray} handleShuffleArray={handleShuffleArray} handlePause={handlePause} sliderValue={sliderValue} handleSliderChange={handleSliderChange} paused={paused}/>
       <div className="array-container">
+        <h1 className='sort-title'>Quick Sort</h1>
         {items.map((item, index) => {
           const heightPercentage = maxValue ? (item.value / maxValue) * 100 : 0;
           return (

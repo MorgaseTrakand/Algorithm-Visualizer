@@ -7,9 +7,9 @@ const App = () => {
     return (
         <Router>
             <Routes>
+                <Route path="/" element={<h1>Welcome to the Sorting Visualizer!</h1>} />
                 <Route path="/quick-sort" element={<QuickSortPage />} />
                 <Route path="/bubble-sort" element={<BubbleSortPage />} />
-                <Route path="/" element={<h1>Welcome to the Sorting Visualizer!</h1>} />
             </Routes>
         </Router>
     );
