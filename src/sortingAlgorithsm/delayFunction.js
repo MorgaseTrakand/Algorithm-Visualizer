@@ -1,6 +1,6 @@
-export const delaySystem = async (getDelay) => {
+export const delaySystem = async (getDelay, factor = 1) => {
   //get initial delay
-  let delay = getDelay();
+  let delay = (getDelay()) * factor;
 
   //this loop will run if delay is paused until unpaused
   while (true) {

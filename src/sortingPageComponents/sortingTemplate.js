@@ -8,7 +8,7 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
   const [isSorted, setIsSorted] = useState(true)
   const [sliderValue, setSliderValue] = useState(50);
   const [paused, setPaused] = useState(false)
-  const delayRef = useRef(1000);
+  const delayRef = useRef(50);
   const [items, setItems] = useState([]);
 
   //generates sorted array
@@ -48,11 +48,10 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
   const handleSortArray = async () => {
     if (!isAnimation && !isSorted) {
         setIsAnimation(true)
-        const arr = [...items]
         if (sortNumber === 1) { 
-            await sortFunction(arr, setItems, getDelay)
+            await sortFunction([...items], setItems, getDelay)
         } else {
-            await sortFunction(0, arr.length-1, arr, setItems, getDelay)
+            await sortFunction(0, items.length-1, [...items], setItems, getDelay)
         }
         setIsAnimation(false)
         setIsSorted(true)
@@ -61,11 +60,10 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
 
   //calls shuffle function
   const handleShuffleArray = async () => {
-    const arrayBars = [...items]
     if (!isAnimation) {
         setIsSorted(false)
         setIsAnimation(true)
-        await shuffle(arrayBars, setItems, getDelay)
+        await shuffle([...items], setItems, getDelay)
         setIsAnimation(false)
     }
   }
