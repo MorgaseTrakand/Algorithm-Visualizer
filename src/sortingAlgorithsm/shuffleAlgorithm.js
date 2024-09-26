@@ -7,11 +7,13 @@ export const shuffle = async (shuffledItems, setItems, getDelay) => {
             j = Math.floor(Math.random() * (i + 1));
         }
 
-        [shuffledItems[i].height, shuffledItems[j].height] = [shuffledItems[j].height, shuffledItems[i].height]
+        let temp = shuffledItems[i].height
+        shuffledItems[i].height = shuffledItems[j].height
+        shuffledItems[j].height = temp
         shuffledItems[i].backgroundColor = shuffledItems[j].backgroundColor = 'red';
         setItems([...shuffledItems])
 
-        await delaySystem(getDelay, 0.5)      
+        await delaySystem(getDelay)      
         shuffledItems[i].backgroundColor = shuffledItems[j].backgroundColor = '#333A56'
         setItems([...shuffledItems])      
       }

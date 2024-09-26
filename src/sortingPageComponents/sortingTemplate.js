@@ -3,13 +3,14 @@ import { shuffle } from '../sortingAlgorithsm/shuffleAlgorithm';
 import Header from './header';
 import '../App.css';
 
-function SortingTemplate( { sortFunction, sortNumber } ) {
+function SortingTemplate( { sortFunction, sortNumber, title } ) {
   const [isAnimation, setIsAnimation] = useState(false)
   const [isSorted, setIsSorted] = useState(true)
-  const [sliderValue, setSliderValue] = useState(50);
+  const [sliderValue, setSliderValue] = useState(1000);
   const [paused, setPaused] = useState(false)
-  const delayRef = useRef(50);
+  const delayRef = useRef(1);
   const [items, setItems] = useState([]);
+  //const [speed, setSpeed] = useState(20)
 
   //generates sorted array
   const generateSequentialItems = (length) => {
@@ -18,8 +19,8 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
       const heightPercentage = (index + 1) / maxValue * 100;
       return {
         value: index + 1,
-        backgroundColor: '#333A56',
-        height: heightPercentage
+        height: heightPercentage,
+        backgroundColor: ''
       };
     });
   };
@@ -88,24 +89,27 @@ function SortingTemplate( { sortFunction, sortNumber } ) {
 
   return (
     <>
-      <Header handleSortArray={handleSortArray} handleShuffleArray={handleShuffleArray} handlePause={handlePause} sliderValue={sliderValue} handleSliderChange={handleSliderChange} paused={paused}/>
-      <div className="array-container">
-        <h1 className='sort-title'>Quick Sort</h1>
-        {items.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className="item"
-              style={{
-                height: `${item.height}%`,
-                backgroundColor: item.backgroundColor
-              }}
-            ></div>
-          );
-        })}
-      </div>
-
-      
+      <div className='body'>
+        <div className='first-block'> 
+          <Header handleSortArray={handleSortArray} handleShuffleArray={handleShuffleArray} handlePause={handlePause} sliderValue={sliderValue} handleSliderChange={handleSliderChange} paused={paused}/>
+          <div className="array-container">
+            <h1 className='sort-title'>{title}</h1>
+            {items.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  id={`item-${index}`}
+                  className="item"
+                  style={{
+                    height: `${item.height}%`,
+                    background: item.backgroundColor
+                  }}
+                ></div>
+              );
+            })}
+          </div>
+        </div>
+      </div>      
     </>
   );
 }
