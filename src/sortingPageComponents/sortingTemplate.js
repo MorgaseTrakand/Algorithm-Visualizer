@@ -6,9 +6,9 @@ import '../App.css';
 function SortingTemplate( { sortFunction, sortNumber, title } ) {
   const [isAnimation, setIsAnimation] = useState(false)
   const [isSorted, setIsSorted] = useState(true)
-  const [sliderValue, setSliderValue] = useState(1000);
+  const [sliderValue, setSliderValue] = useState(300);
   const [paused, setPaused] = useState(false)
-  const delayRef = useRef(1);
+  const delayRef = useRef(0.1);
   const [items, setItems] = useState([]);
   //const [speed, setSpeed] = useState(20)
 

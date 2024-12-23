@@ -14,7 +14,7 @@ export const shuffle = async (shuffledItems, setItems, getDelay) => {
         setItems([...shuffledItems])
 
         await delaySystem(getDelay)      
-        shuffledItems[i].backgroundColor = shuffledItems[j].backgroundColor = '#333A56'
+        shuffledItems[i].backgroundColor = shuffledItems[j].backgroundColor = ''
         setItems([...shuffledItems])      
       }
 }

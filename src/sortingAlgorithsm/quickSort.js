@@ -21,11 +21,11 @@ export const quickSort = async (low, high, array, setItems, getDelay) => {
             [arr[i].height, arr[j].height] = [arr[j].height, arr[i].height];
             setItems([...arr]);
             arr[i].backgroundColor = arr[j].backgroundColor = 'red';
-            lastIndexes.forEach(item => item.backgroundColor = '#333A56');
+            lastIndexes.forEach(item => item.backgroundColor = '');
             lastIndexes = [arr[i], arr[j]];
         }
     }
-    lastIndexes.forEach(item => item.backgroundColor = '#333A56');
+    lastIndexes.forEach(item => item.backgroundColor = '');
     [arr[i + 1].height, arr[high].height] = [arr[high].height, arr[i + 1].height];
     setItems([...arr]);
     return i + 1;

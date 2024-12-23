@@ -21,7 +21,11 @@ export const selectionSort = async (arr, setItems, getDelay) => {
 
     // If a smaller element was found, swap it with the current element
     if (minIndex !== i) {
+      arr[i].backgroundColor = arr[minIndex].backgroundColor = 'red';
       [arr[i].height, arr[minIndex].height] = [arr[minIndex].height, arr[i].height]; // Swap using destructuring
+      setItems([...arr]);
+      await delaySystem(getDelay);
+      arr[i].backgroundColor = arr[minIndex].backgroundColor = '';
     }
     setItems([...arr])
   }
