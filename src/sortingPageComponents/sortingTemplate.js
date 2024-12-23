@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef} from 'react';
 import { shuffle } from '../sortingAlgorithsm/shuffleAlgorithm';
 import Header from './header';
+import HeaderLeft from './headerLeft';
 import '../App.css';
 
 function SortingTemplate( { sortFunction, sortNumber, title } ) {
@@ -8,7 +9,7 @@ function SortingTemplate( { sortFunction, sortNumber, title } ) {
   const [isSorted, setIsSorted] = useState(true)
   const [sliderValue, setSliderValue] = useState(300);
   const [paused, setPaused] = useState(false)
-  const delayRef = useRef(0.1);
+  const delayRef = useRef(20);
   const [items, setItems] = useState([]);
   //const [speed, setSpeed] = useState(20)
 
@@ -76,7 +77,7 @@ function SortingTemplate( { sortFunction, sortNumber, title } ) {
   const handlePause = () => {
     if (isAnimation) {
       if (paused) {
-        delayRef.current = 100
+        delayRef.current = 20
         setPaused(false)
       }
       else {
@@ -91,7 +92,8 @@ function SortingTemplate( { sortFunction, sortNumber, title } ) {
     <>
       <div className='body'>
         <div className='first-block'> 
-          <Header handleSortArray={handleSortArray} handleShuffleArray={handleShuffleArray} handlePause={handlePause} sliderValue={sliderValue} handleSliderChange={handleSliderChange} paused={paused}/>
+          <Header />
+          <HeaderLeft handleSortArray={handleSortArray} handleShuffleArray={handleShuffleArray} handlePause={handlePause} handleSliderChange={handleSliderChange} sliderValue={sliderValue} paused={paused}/>
           <div className="array-container">
             <h1 className='sort-title'>{title}</h1>
             {items.map((item, index) => {

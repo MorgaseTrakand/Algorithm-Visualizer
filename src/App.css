@@ -13,7 +13,7 @@ body {
   background-color: aliceblue;
 }
 .array-container {
-  height: 80vh;
+  height: 74vh;
   margin-top: 160px;
   margin-left: 5vw;
   margin-right: 5vw;
@@ -28,6 +28,13 @@ body {
   margin-right: 0px;
   background: linear-gradient(135deg, #5c6896, #20252e);
   border-radius: 1px;
+}
+nav {
+  z-index: 1;
+  background-color: #001F3F;
+}
+.navbar-brand, .navbar-nav .nav-item {
+  color: white !important;
 }
 header {
   height: 80px;
@@ -61,15 +68,59 @@ header h1 {
   margin: 0 14px;
   text-align: center;
   color: black;
+  font-size: 30px;
 }
+
 .sort-title {
  position: absolute; 
- top: 40px;
+ top: 80px;
  font-family: 'Electrolize', sans-serif;
  font-size: 80px;
 }
 .size-title {
   font-size: 26px;
+}
+@media (max-width: 1200px) {
+  .sort-title {
+    font-size: 60px;
+    top: 90px;
+  }
+  .header-left h1 {
+    font-size: 20px;
+  }
+}
+@media (max-width: 950px) {
+  .sort-title {
+    top: 80px;
+    font-size: 40px;
+  }
+  .header-left {
+    width: 100%;
+    right: 0;
+    padding: 0 5vw;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 6vh;
+  }
+  .width-100 {
+    width: 100%;
+    margin: 2px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .array-container {
+    height: 50vh;
+    margin-top: 40vh;
+  }
+  .navbar-brand {
+    font-size: 12px !important;
+  }
+}
+@media (max-width: 370px) {
+  .sort-title {
+    top: 100px;
+  }
 }
 
 
